@@ -2,9 +2,9 @@
 # 2강 자료구조 개요
 
 # 여러가지 자료구조
-# 1. Vector         1차
-# 2. Matrix         2차
-# 3. Array          3차(다차원)
+# 1. Vector         1차원
+# 2. Matrix         2차원
+# 3. Array          3차원
 # 4. Data Frame     List와 Vector 혼합형, 가장 많이 사용
 # 5. List           Key, Value, c(구조체), python(딕셔너리)
 
@@ -114,3 +114,45 @@ class(txtemp)
 csvemp <- read.csv("emp.csv", header = T)
 csvemp
 class(csvemp)
+
+pay <- csvemp$pay # 컬럼 -> vector
+pay
+
+mean(pay) # 370
+max(pay) # 500
+
+# 컬럼명이 없는 파일 불러오기
+col_name <- c("사번", "이름", "급여")
+read.csv("emp2.csv", header = F, col.names = col_name)
+
+# 5. List : 서로 다른 자료형, 자료구조 저장
+# - key 와 value    [k1:1][k2:2][k3:3] 쌍쌍쌍~~
+
+# 1) key 생략
+list1 <- list("lee", "이순신", 35)
+list1
+#[[1]] <- key1
+#[1] "lee" <- value1
+#
+#[[2]] <- key2
+#[1] "이순신" <- value2
+#
+#[[3]]
+#[1] 35
+list1[[1]] # "lee"
+list1[[2]] # "이순신"
+
+# list -> vector
+unlist(list1) # list 자체가 사라지는건 아니다
+list1
+
+# 2) key 지정
+list2 <- list(first = 1:5, second = 6:10)
+list2$first
+list2$first[5]
+
+# 3) 서로다른 자료구조
+multi_list <- list(one = 1:5, two = matrix(1:9, 3),
+                   three = array(1:12, c(2, 2, 3)))
+multi_list
+multi_list$two
