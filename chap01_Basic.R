@@ -83,3 +83,5 @@ hist(Nile)
 getwd() # 기본경로 보기 - 파일 입출력시 사용
 setwd("C:/Rdata/chap01") # 기본경로 수정 
 test <- read.csv("test.csv", header = T)
+
+.libPaths()
