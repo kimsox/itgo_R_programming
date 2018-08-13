@@ -41,3 +41,39 @@ name <- c("홍길동", "이순신", "유관순")
 # data.frame 생성
 student <- data.frame(name, kor, eng, mat)
 student
+
+tot <- numeric()
+avg <- numeric()
+
+for (i in 1:nrow(student)) { # 학생수 만큼 반복
+    tot[i] <- student$kor[i] + student$eng[i] + student$mat[i]
+    avg[i] <- round((tot[i] / 3), 2) # 소수 두번째자리 까지 표현!
+}
+tot
+avg
+
+# data.frame에 칼럼 추가
+student$avg <- avg
+student$tot <- tot
+student
+
+# 다중 for
+# for(){ for() {} }
+# skip~~~~~
+
+
+# 2) while(조걷식){표현식}
+i = 0
+while (i < 10) {
+    i = i + 1 # 카운터 변수
+    print(i) # 1~10까지 출력됨
+}
+
+# 3) repeat {탈출조건}
+cnt <- 1
+repeat {
+    print(cnt)
+    cnt <- cnt + 2
+    if (cnt > 15)
+        break
+    }
