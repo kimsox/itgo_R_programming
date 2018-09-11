@@ -1,4 +1,5 @@
 install.packages('RODBC')
+install.packages('ggplot2')
 install.packages("RColorBrewer") {
     library(RColorBrewer) # 컬러 패키지
     display.brewer.all()
@@ -119,7 +120,7 @@ for (i in names(table(main_df$INC_TP_CD))) {
 # 경부고속도로 만 subset으로 가져오기
 # 정체구간 시작점
 str(main_df)
-type <- 1
+type <- 2
 nRoadNo <- 10
 ylimNo <- ifelse(nRoadNo == 10, 450, 250)
 if (type == 1) {
@@ -163,9 +164,31 @@ if (type == 1) {
     legend(4, ylimNo, c("사고", "고장", "장애물"), pch = c(1, 1), col = c("Red", "Blue", "darkorange"))
 }
 
-title(main = "시간", outer = F)
+title(main = "돌발상황", outer = F)
 
 setwd("D:/Study/itgo_R_programming/EXData_Practice/")
 mile0050 <- read.csv(file = sprintf("%04d.csv", nRoadNo), header = F)
 
 text(1, mile0050$V2, mile0050$V1, col = "Dark Green", cex = 0.8)
+
+# 사고 히스토그램 그리기
+# 사고만 떼어오기 (경부고속도로) 
+accident0010 <- subset(main_df, ROUTE_NO == 10 & INC_TP_CD == 0, select = c(OCCURE_MILEPOST))
+accidentHist <- accident0010
+# 사고만 떼어오기 (영동고속도로) 
+accident0500 <- subset(main_df, ROUTE_NO == 500 & INC_TP_CD == 0, select = c(OCCURE_MILEPOST))
+accidentHist <- accident0500
+
+head(accidentHist)
+mode(accidentHist)
+#hist(accidentHist$OCCURE_MILEPOST, breaks = 50, xlim = c(0, 450))
+#abline(v = seq(0, 500, 5), col = "Grey", lty = 3)
+library(ggplot2)
+ggplot(accidentHist, aes(x = accidentHist$OCCURE_MILEPOST)) +
+    geom_histogram(binwidth = 1, color = "white", fill = rgb(0.2, 0.7, 0.1, 0.4))
+#fh <- cut(accidentHist$OCCURE_MILEPOST, breaks = 100)
+
+subMile <- subset(accidentHist, accidentHist$OCCURE_MILEPOST > 372 & accidentHist$OCCURE_MILEPOST < 377)
+
+mt <- subMile[order(subMile$OCCURE_MILEPOST),]
+mt
